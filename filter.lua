@@ -1,6 +1,6 @@
 local myTableBorderType  = "dashSmallGap"
 local myTableBorderColor = "898989"
-local myTableWidthPct    = 9000 -- table table percent: [0, 10000)
+local myTableWidthPct    = 9000 -- table width percent: [0, 10000)
 
 function addWordStyle(text, style)
     local word = string.match(text, "^<w:r><w:rPr>(.*)</w:r>$")
