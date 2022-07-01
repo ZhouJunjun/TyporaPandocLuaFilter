@@ -1,4 +1,4 @@
-# TyporaLuaFilter
+# TyporaPandocLuaFilter
 
 - 对Typora的右键菜单添加颜色
 - 支持导出带颜色的word文字和指定word中表格的边框样式
