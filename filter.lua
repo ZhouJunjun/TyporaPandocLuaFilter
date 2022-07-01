@@ -13,6 +13,8 @@ end
 
 function aroundWordStyle(text, style)
     -- printf("aroundWordStyle, text: "..text..", to: "..'<w:r><w:rPr>' .. style .. '</w:rPr><w:t>' .. text .. "</w:t></w:r>")
+    text = string.gsub(text, "<", "&lt;")
+    text = string.gsub(text, ">", "&gt;")
     return pandoc.RawInline("openxml", '<w:r><w:rPr>' .. style .. '</w:rPr><w:t>' .. text .. "</w:t></w:r>")
 end
 
@@ -61,8 +63,6 @@ function Str(elem)
         return elem
     end
 
-    elem.text = string.gsub(elem.text, "<", "&lt;")
-    elem.text = string.gsub(elem.text, ">", "&gt;")
     if #fontStack and fontStack[#fontStack] ~= '' then
         local color = fontStack[#fontStack]
         if color then
@@ -241,7 +241,9 @@ function handleTableCells(myTable, cells)
         for _, cellContent in ipairs(cell.contents) do
             for _, cellContentContent in ipairs(cellContent.content) do
                 if cellContentContent.t == "Str" then
-                    myTable:addNewRawBlock("openxml", '<w:r><w:rPr/><w:t>' .. cellContentContent.text .. "</w:t></w:r>")
+                    local text = string.gsub(cellContentContent.text, "<", "&lt;")
+                    text       = string.gsub(text, ">", "&gt;")
+                    myTable:addNewRawBlock("openxml", '<w:r><w:rPr/><w:t>' .. text .. "</w:t></w:r>")
 
                 elseif cellContentContent.t == "RawInline" then
                     myTable:addNewRawBlock(cellContentContent.format, cellContentContent.text)
